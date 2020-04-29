@@ -21,7 +21,6 @@ migrate = Migrate(flask_app, db)
 logging.info(f"Application intialised")
 
 
-flask_app.add_url_rule('/tokens', view_func=TokensView.as_view('tokens'))
 flask_app.add_url_rule('/api', view_func=ApiInfoView.as_view('root'))
 flask_app.add_url_rule('/players', view_func=PlayersView.as_view('players'))
 flask_app.add_url_rule(
