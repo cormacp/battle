@@ -27,7 +27,16 @@ for route in URLS:
 logging.info(f"Application intialised")
 
 
-
+"""
+'Player' model definition. Given enough time, this should be refactored to its own 'models' sub-module
+Properties:
+    UUID (uuid) : Unique identifier for ID-obfuscated requests
+    name (string) : Player name, limited to 1024 characters
+    gold (int) : A player's balance of gold
+    attack (int) : A player's attack power
+    hitpoints (int) : A player's health-level
+    luck (int) : A player's likelihood to miss during their turn (currently unused)
+"""
 class Player(db.Model):
     __tablename__ = 'players'
     id = db.Column(db.Integer, primary_key=True)
@@ -49,7 +58,14 @@ class Player(db.Model):
     def __repr__(self):
         return f"<Player {self.name}, uuid {str(self.uuid)}>"
 
-
+"""
+'Battle' model definition. Given enough time, this should be refactored to its own 'models' sub-module
+Properties:
+    UUID (uuid) : Unique identifier for ID-obfuscated requests
+    player_a (int) : player A's primary key identifier (foreign key is Players.id)
+    player_b (int) : player C's primary key identifier (foreign key is Players.id)
+    oucome (JSON) : a structured JSON object containing outcome information for a completed battle
+"""
 class Battle(db.Model):
     __tablename_ = 'battles'
     id = db.Column(db.Integer, primary_key=True)
