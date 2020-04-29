@@ -136,10 +136,12 @@ Response:
 ```
 Supported methods:
 * GET - to retrieve historical battle data
-* POST - to a new battle between players
+* POST - to create a new battle between players
 
 
 ### sample CURL POST request
+
+A POST request to the Battles resource requires two query string arguments (``Player.id`` identifiers) to begin a battle between both players. For example:
 
 ```
 curl --location --request POST 'http://127.0.0.1:5000/battles?player_a=14&player_b=15' \
@@ -186,3 +188,64 @@ Response:
 * player_a (int) : ID for player A (foreign key: Players.id
 * player_b (int) : ID for player B (foreign key: Players.id)
 * outcome (dict) : a structured JSON object containing outcome information for a completed battle
+
+
+## Leaderboards
+
+Provides an ordered leaderboard of Players, and their corresponding balance of gold
+
+```
+<domain>/players
+<domain>/players/<player_uuid>
+```
+Supported methods:
+* GET - to retrieve player data
+
+### sample CURL GET request
+
+```
+curl --location --request GET 'http://127.0.0.1:5000/leaderboards' \
+--header 'Authorization: admin'
+```
+
+Response:
+```
+[
+    {
+        "richie_rich": {
+            "gold": 4582,
+            "uuid": "84c560dd-b193-47ba-9d90-e6b9c0925c2e"
+        }
+    },
+    {
+        "middlin'_max": {
+            "gold": 1311,
+            "uuid": "b8d29cf9-e3c4-4435-8787-ea998781be86"
+        }
+    },
+    {
+        "mediocre_mark": {
+            "gold": 1000,
+            "uuid": "9dd3a1e0-4fcc-4c2f-a48f-e1e27051030d"
+        }
+    },
+    {
+        "mediocre_mark": {
+            "gold": 1000,
+            "uuid": "dc80c4a8-2af7-4f89-911c-822b1bf0f39d"
+        }
+    },
+    {
+        "tedious_ted": {
+            "gold": 689,
+            "uuid": "6beaca9a-ddde-4479-968f-1161ca4d2790"
+        }
+    },
+    {
+        "stingy_steve": {
+            "gold": 418,
+            "uuid": "9957bdb9-b403-46fe-94d2-2b2a6c4732d2"
+        }
+    }
+]
+```
