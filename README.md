@@ -60,3 +60,16 @@ tests/test_players_view.py ......                                               
 ```
 
 # API Resources
+
+## Players
+
+```
+<domain>/players/<player_uuid>
+```
+
+* UUID (uuid) : Unique identifier for ID-obfuscated requests
+* name (string) : Player name, limited to 1024 characters
+* gold (int) : A player's balance of gold
+* attack (int) : A player's attack power
+* hitpoints (int) : A player's health-level
+* luck (int) : A player's likelihood to miss during their turn (currently unused)
