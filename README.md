@@ -225,12 +225,6 @@ Response:
     {
         "mediocre_mark": {
             "gold": 1000,
-            "uuid": "9dd3a1e0-4fcc-4c2f-a48f-e1e27051030d"
-        }
-    },
-    {
-        "mediocre_mark": {
-            "gold": 1000,
             "uuid": "dc80c4a8-2af7-4f89-911c-822b1bf0f39d"
         }
     },
