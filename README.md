@@ -66,11 +66,12 @@ All API endpoints are protected with very simple authentication. This requires t
 ## Players
 
 ```
+<domain>/players
 <domain>/players/<player_uuid>
 ```
 Supported methods:
-* GET
-* POST
+* GET - to retrieve player data
+* POST - to create player data
 
 ### sample CURL GET request
 
@@ -126,3 +127,62 @@ Response:
     "luck": 40
 }
 ```
+
+## Battles
+
+```
+<domain>/battles
+<domain>/battles/<battle_uuid>
+```
+Supported methods:
+* GET - to retrieve historical battle data
+* POST - to a new battle between players
+
+
+### sample CURL POST request
+
+```
+curl --location --request POST 'http://127.0.0.1:5000/battles?player_a=14&player_b=15' \
+--header 'Authorization: admin'
+```
+
+Response:
+```
+{
+    "uuid": "17a246d7-8153-447b-bef3-e3a1c9119fc5",
+    "richie_rich": 91,
+    "stingy_steve": -91,
+    "random_gold_percentage": 0.18
+}
+```
+
+* UUID (uuid) : Unique identifier for the battle
+* player_a_outcome (int) : player A's profit/loss from the battle
+* player_b_outcome (int) : player B's profit/loss from the battle
+* random_gold_percentage (float) : Random percentage between 10-20%, dictating the size of the winning purse
+
+### sample CURL GET request
+
+```
+curl --location --request GET 'http://127.0.0.1:5000/battles/17a246d7-8153-447b-bef3-e3a1c9119fc5' \
+--header 'Authorization: admin'
+```
+
+Response:
+```
+{
+    "uuid": "17a246d7-8153-447b-bef3-e3a1c9119fc5",
+    "player_a": 14,
+    "player_b": 15,
+    "outcome": {
+        "uuid": "17a246d7-8153-447b-bef3-e3a1c9119fc5",
+        "richie_rich": 91,
+        "stingy_steve": -91,
+        "random_gold_percentage": 0.18
+    }
+}
+```
+* UUID (uuid) : Unique identifier for the battle
+* player_a (int) : ID for player A (foreign key: Players.id
+* player_b (int) : ID for player B (foreign key: Players.id)
+* outcome (dict) : a structured JSON object containing outcome information for a completed battle
