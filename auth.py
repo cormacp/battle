@@ -6,7 +6,11 @@ import logging
 
 logging.basicConfig(level=logging.INFO)
 
-
+"""
+Simple authentication decorator, using a static auth token.
+A full implementation would include token creation, validation and refresh endpoints.
+Additionally, a full implemention would use full OAuth2 Bearer tokens
+"""
 def requires_simple_auth(f):
     @wraps(f)
     def decorated(*args, **kwargs):
