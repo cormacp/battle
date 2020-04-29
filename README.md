@@ -61,20 +61,25 @@ tests/test_players_view.py ......                                               
 
 # API Resources
 
+All API endpoints are protected with very simple authentication. This requires that all requests include ``Authorization: admin`` in their headers.
+
 ## Players
 
 ```
 <domain>/players/<player_uuid>
 ```
+Supported methods:
+* GET
+* POST
 
-## sample CURL request
+### sample CURL GET request
 
 ```
 curl --location --request GET 'http://127.0.0.1:5000/players/f4f7e97d-9953-4970-8d8e-f0542a289797' \
 --header 'Authorization: admin'
 ```
 
-Reponse:
+Response:
 ```
 {
     "uuid": "9957bdb9-b403-46fe-94d2-2b2a6c4732d2",
@@ -93,3 +98,31 @@ Reponse:
 * attack (int) : A player's attack power
 * hitpoints (int) : A player's health-level
 * luck (int) : A player's likelihood to miss during their turn (currently unused)
+
+
+### sample CURL POST request
+
+```
+curl --location --request POST 'http://127.0.0.1:5000/players' \
+--header 'Authorization: admin' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+	"name": "mediocre_mark",
+	"gold": 1000,
+    "attack": 40,
+    "hitpoints": 13000,
+    "luck": 40
+}'
+```
+
+Response:
+```
+{
+    "uuid": "9dd3a1e0-4fcc-4c2f-a48f-e1e27051030d",
+    "name": "mediocre_mark",
+    "gold": 1000,
+    "attack": 40,
+    "hitpoints": 13000,
+    "luck": 40
+}
+```
