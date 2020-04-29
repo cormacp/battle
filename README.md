@@ -195,8 +195,7 @@ Response:
 Provides an ordered leaderboard of Players, and their corresponding balance of gold
 
 ```
-<domain>/players
-<domain>/players/<player_uuid>
+<domain>/leaderboards
 ```
 Supported methods:
 * GET - to retrieve player data
