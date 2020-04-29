@@ -67,6 +67,26 @@ tests/test_players_view.py ......                                               
 <domain>/players/<player_uuid>
 ```
 
+## sample CURL request
+
+```
+curl --location --request GET 'http://127.0.0.1:5000/players/f4f7e97d-9953-4970-8d8e-f0542a289797' \
+--header 'Authorization: admin'
+```
+
+Reponse:
+```
+{
+    "uuid": "9957bdb9-b403-46fe-94d2-2b2a6c4732d2",
+    "id": 15,
+    "name": "stingy_steve",
+    "gold": 509,
+    "attack": 200,
+    "hitpoints": 3000,
+    "luck": 100
+}
+```
+
 * UUID (uuid) : Unique identifier for ID-obfuscated requests
 * name (string) : Player name, limited to 1024 characters
 * gold (int) : A player's balance of gold
