@@ -45,6 +45,17 @@ class TestPlayerResource(object):
             headers={"Authorization": "admin"},
             follow_redirects=True)
         assert response.status_code == 200
+        data = json.loads(response.get_data().decode('utf-8'))
+        assert 'uuid' in data
+        assert data['uuid'] == self.valid_player_1_uuid
+        assert 'gold' in data
+        assert data['gold'] == 123
+        assert 'attack' in data
+        assert data['attack'] == 456
+        assert 'hitpoints' in data
+        assert data['hitpoints'] == 1000
+        assert 'luck' in data
+        assert data['luck'] == 4
 
     # def test_valid_post_request(self):
     #     url = f"/players"
