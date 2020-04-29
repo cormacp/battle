@@ -7,28 +7,25 @@ from sqlalchemy import Column, String, ForeignKey, Integer
 from sqlalchemy.dialects.postgresql import UUID, JSON
 import uuid
 
-from battle.views.tokens import TokensView
 from battle.views.players import PlayersView
 from battle.views.battles import BattlesView
 from battle.views.leaderboards import LeaderboardsView
 from battle.views.api import ApiInfoView
+from .urls import URLS
+
 
 flask_app = Flask(__name__)
 flask_app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://dbadmin:abc123@localhost:5432/battle_dev"
 logging.basicConfig(level=logging.INFO)
 db = SQLAlchemy(flask_app)
 migrate = Migrate(flask_app, db)
+
+#  Parse URL definitions and initialize views
+for route in URLS:
+    flask_app.add_url_rule(
+        route[0], view_func=route[1].as_view(route[2]))
 logging.info(f"Application intialised")
 
-
-flask_app.add_url_rule('/api', view_func=ApiInfoView.as_view('root'))
-flask_app.add_url_rule('/players', view_func=PlayersView.as_view('players'))
-flask_app.add_url_rule(
-    '/players/<uuid:uuid>', view_func=PlayersView.as_view('player_by_uuid'))
-flask_app.add_url_rule('/battles', view_func=BattlesView.as_view('battles'))
-flask_app.add_url_rule(
-    '/battles/<uuid:uuid>', view_func=BattlesView.as_view('battle_by_uuid'))
-flask_app.add_url_rule('/leaderboards', view_func=LeaderboardsView.as_view('leaderboards'))
 
 
 class Player(db.Model):
