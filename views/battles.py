@@ -68,7 +68,15 @@ class BattlesView(MethodView):
         else:
             return Response(json.dumps({"bad": "request"}), mimetype='application/json', status=400)
 
-    def __execute_battle(self, player_a, player_b, battle_outcome):
+    def __execute_battle(self, player_a: object, player_b: object, battle_outcome: dict):
+        """
+        A private function that coordinates battles between two players, and records the outcome
+
+        Args:
+            player_a (Object): the first player taking part in the battle (takes first turn)
+            player_a (Object): the second player taking part in the battle
+            battle_outcome (dict): a structured JSON object containing outcome information for a completed battle
+        """
         logging.info(f"Beginning battle between {player_a.name} and {player_b.name}")
         a_hp = player_a.hitpoints
         b_hp = player_b.hitpoints
@@ -81,8 +89,10 @@ class BattlesView(MethodView):
             - using the Player.luck property to affect the likelihood of a completely failed attack
             - Expand the rules for each attack turn to include scaling of the attack value, proportional the the player's hit points
             - Additional checking for a player's gold balance being insufficient
+            - A queuing system to handle concurrent battle requests for the same user
         """
 
+        # Continue exchanging attacks between player A & B until at least one player runs out of hitpoints
         while a_hp > 0 and b_hp > 0:
             if is_player_a_turn:
                 # Subtract hit points from player b, equal to the amount of attack points of player a
@@ -95,7 +105,7 @@ class BattlesView(MethodView):
                 logging.info(f"{player_b.name} attacked {player_a.name} with {player_b.attack} points. {a_hp} hit points remaining for {player_a.name}")
                 is_player_a_turn = True
 
-        # carry out appropriate gold transactions
+        # carry out appropriate gold transactions for winner & loser
         if a_hp < 0:
             transaction_amt = int(player_a.gold * gold_percentage)
             logging.info(f"{player_a.name} loses, and will pay {transaction_amt} to {player_b.name}")
