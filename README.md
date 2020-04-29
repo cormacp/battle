@@ -13,6 +13,23 @@ pipenv install --dev
 
 ## DB Setup
 
+This project requires a local running instance of PostreSQL, a correctly configured db admin user, and a newly-created database. The following commands will achieve this:
+
+```
+$ createuser --pwprompt dbadmin
+  # use password abc123 when prompted
+
+$ createdb -Odbadmin -Eutf8 battle_dev
+
+For PSQL console access :
+$ psql -U dbadmin -W battle_dev
+
+To initialise and migrate db for Flask app
+$ flask db init
+$ flask db migrate
+$ flask db upgrade
+```
+
 ## Running
 
 To run the Battle API:
